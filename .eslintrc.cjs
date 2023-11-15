@@ -25,5 +25,7 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react"],
-  rules: {},
+  rules: {
+    "react/prop-types": [1, { ignore: ["propNameToIgnore"], customValidators: [], skipUndeclared: true }]
+  },
 };
