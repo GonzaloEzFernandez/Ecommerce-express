@@ -1,23 +1,25 @@
-function ItemInTheCart() {
+function ItemInTheCart({price, thumbnail, title, quantity}) {
+
+
   return (
         <div className="text-white  bg-[#252837] p-4 rounded-xl mb-2">
       <div className="grid grid-cols-6 gap-2 mb-3">
         <div className="flex items-center col-span-4 gap-4">
           <img
             className="rounded-full w-16 h-16 object-cover"
-            src="https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+            src={thumbnail}
             alt=""
           />
           <div>
-            <p>Spaicy season...</p>
-            <span className="text-gray-300">$2.21</span>
+            <p>{title}</p>
+            <span className="text-gray-300">{price}</span>
           </div>
         </div>
         <div className="flex ">
-          <span className="pl-2">2</span>
+          <span className="pl-2">{quantity}</span>
         </div>
         <div>
-          <span>$4.22</span>
+          <span>{price}</span>
         </div>
       </div>
 

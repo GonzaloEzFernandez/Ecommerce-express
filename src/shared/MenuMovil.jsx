@@ -1,10 +1,14 @@
-/* eslint-disable react/prop-types */
+import { showContext } from "../services/showProvider"
+import { useContext } from "react"
 
-function MenuMovil({ handleShowMenu, handleShowOrder, showMenu }) {
+function MenuMovil() {
+  const {handleShowMenu, handleShowOrder, showMenu} = useContext(showContext)
   return (
     <nav className="fixed bg-[#1E1D2A] text-gray-400 w-full rounded-t-xl  lg:hidden z-20 bottom-0 left-0">
       <div className="flex justify-between ml-4 mr-4">
-        <button className="p-4 hover:bg-[#EC7C6A] hover:text-white  transition-colors rounded-xl">
+        <button 
+        
+        className="p-4 hover:bg-[#EC7C6A] hover:text-white  transition-colors rounded-xl">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

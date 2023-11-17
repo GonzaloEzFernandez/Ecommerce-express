@@ -1,5 +1,11 @@
-/* eslint-disable react/prop-types */
-function SideBar({ showMenu }) {
+import { useContext } from "react"
+import { showContext } from "../services/showProvider"
+
+function SideBar() {
+
+  const {showMenu} = useContext(showContext)
+
+
   return (
     <nav
       className={`transition-all z-20 w-28 h-screen bg-[#1E1D2A] flex flex-col justify-between rounded-r-xl top-0 fixed lg:left-0  ${

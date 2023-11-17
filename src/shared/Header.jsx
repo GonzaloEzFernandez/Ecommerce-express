@@ -1,15 +1,4 @@
-import { useContext } from "react"
-import { Context } from "../services/Context"
-
 function Header() {
-  const [state, dispatch] = useContext(Context)
-
-  const setFilter = newFilter => {
-    dispatch({
-      type: "FILTER_PRODUCT",
-      payload: newFilter,
-    })
-  }
 
   return (
     <header className=" flex flex-col gap-6 mb-8">
@@ -46,73 +35,7 @@ function Header() {
       </div>
       {/* Tabs */}
       <nav>
-        <ul className="flex justify-between md:justify-start md:gap-12 border-b-2  py-4 px-4">
-          <li>
-            <a
-              onClick={() => {
-                setFilter("all")
-              }}
-              className={state.filter === "all" ? "text-[#EC7C6A]" : ""}
-              href="#all"
-            >
-              all
-            </a>
-          </li>
-          <li>
-            <a
-              onClick={() => setFilter("smartphones")}
-              className={state.filter === "smartphones" ? "text-[#EC7C6A]" : ""}
-              href="#smartphones"
-            >
-              smartphones
-            </a>
-          </li>
-          <li>
-            <a
-              onClick={() => setFilter("laptops")}
-              className={state.filter === "laptops" ? "text-[#EC7C6A]" : ""}
-              href="#laptops"
-            >
-              laptops
-            </a>
-          </li>
-          <li>
-            <a
-              onClick={() => setFilter("fragrances")}
-              className={state.filter === "fragrances" ? "text-[#EC7C6A]" : ""}
-              href="#fragrances"
-            >
-              fragrances
-            </a>
-          </li>
-          <li>
-            <a
-              onClick={() => setFilter("skincare")}
-              className={state.filter === "skincare" ? "text-[#EC7C6A]" : ""}
-              href="#skincare"
-            >
-              skincare
-            </a>
-          </li>
-        {/*   <li>
-            <a
-              onClick={() => setFilter("groceries")}
-              className={state.filter === "groceries" ? "text-[#EC7C6A]" : ""}
-              href="#groceries"
-            >
-              groceries
-            </a>
-          </li>
-          <li>
-            <a
-              onClick={() => setFilter("home-decoration")}
-              className={state.filter === "home-decoration" ? "text-[#EC7C6A] " : ""}
-              href="#home-decoration"
-            >
-              home-decoration
-            </a>
-          </li> */}
-        </ul>
+        <div className="bg-[#EC7B6A] h-[1.5px] w-full"></div>
       </nav>
     </header>
   )
