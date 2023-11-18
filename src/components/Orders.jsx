@@ -5,7 +5,10 @@ import ItemInTheCart from "./ItemInTheCart"
 
 function Orders() {
   const [state] = useContext(Context)
-  console.log(state.cart)
+
+  const subTotal = state.cart ? state.cart.reduce((total, product) => {
+    return total + product.price * product.quantity
+  }, 0) : 0
 
   const { handleShowOrder, showOrder } = useContext(showContext)
 
@@ -61,20 +64,19 @@ function Orders() {
         </div>
 
         <div className="scrollbar-container max-h-screen mb-[145px] h-full">
-          {state.cart &&
-            state.cart.map(cartItem => (
-              <ItemInTheCart key={cartItem.id} {...cartItem}/>
-            ))}
+          {state.cart?.map(cartItem => (
+            <ItemInTheCart key={cartItem.id} {...cartItem} />
+          ))}
         </div>
 
         <div className="bg-[#252837] absolute left-0 bottom-0 w-full px-6 text-white z-30 ">
           <div className="flex justify-between py-3">
             <span className="text-gray-300">Discount</span>
-            <span className="text-lg">$0</span>
+            <span className="text-lg">$ 0</span>
           </div>
           <div className="flex justify-between py-3">
             <span className="text-gray-300">SubTotal</span>
-            <span className="text-lg">$4.22</span>
+            <span className="text-lg">$ {subTotal}</span>
           </div>
           <div>
             <button className="bg-[#EC7C6A] w-full py-2 rounded-xl">

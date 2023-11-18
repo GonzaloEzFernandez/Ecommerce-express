@@ -1,4 +1,16 @@
-function ItemInTheCart({price, thumbnail, title, quantity}) {
+import { useContext } from "react";
+import { Context } from "../services/Context";
+
+function ItemInTheCart({id, price, thumbnail, title, quantity}) {
+
+  const [, dispatch] = useContext(Context);
+
+  const handleDelete = id => {
+    dispatch({
+      type: "DELETE",
+      payload: id
+    })
+  }
 
 
   return (
@@ -12,7 +24,7 @@ function ItemInTheCart({price, thumbnail, title, quantity}) {
           />
           <div>
             <p>{title}</p>
-            <span className="text-gray-300">{price}</span>
+            <p className="text-gray-300 font-bold" >Price: <span className="font-normal"> ${price} </span></p>
           </div>
         </div>
         <div className="flex ">
@@ -32,7 +44,9 @@ function ItemInTheCart({price, thumbnail, title, quantity}) {
           />
         </form>
         <div className="pl-2">
-          <button className="border border-red-600 p-2 rounded-lg hover:bg-red-600">
+          <button 
+          onClick={() => handleDelete(id)}
+          className="border border-red-600 p-2 rounded-lg hover:bg-red-600">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

@@ -11,9 +11,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <Memory>
     <ShowProvider>
       <BrowserRouter>
-        <>
+        <React.StrictMode>
           <App />
-        </>
+        </React.StrictMode>
       </BrowserRouter>
     </ShowProvider>
   </Memory>
