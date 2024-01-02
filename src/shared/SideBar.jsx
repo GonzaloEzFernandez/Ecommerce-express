@@ -1,10 +1,23 @@
 import { useContext } from "react"
 import { showContext } from "../services/showProvider"
-import { Context } from "../services/Context"
+import { auth } from "../accesibilty/firebase"
+import { signOut } from "firebase/auth"
+import { useNavigate, Link } from "react-router-dom"
 
 function SideBar() {
   const { showMenu } = useContext(showContext)
-  const [state] = useContext(Context)
+
+  const navigate = useNavigate()
+
+  const handleLoginOut = async () => {
+    try {
+      const res = await signOut(auth)
+      navigate("/")
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <nav
@@ -20,9 +33,9 @@ function SideBar() {
             </h1>
           </li>
           <li className="flex justify-center text-[#EC7B6A] bg-[#252837] rounded-l-xl p-3">
-            <a
+            <Link
+              to="/"
               className="p-3 bg-[#EC7C6A] text-white block rounded-xl"
-              href="#"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -38,61 +51,12 @@ function SideBar() {
                   d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
                 />
               </svg>
-            </a>
+            </Link>
           </li>
-
-          <li className="flex relative justify-center hover:bg-[#252837] text-[#EC7B6A] rounded-l-xl p-3 group transition-colors">
-            <a
-              className="block rounded-xl p-3 group-hover:bg-[#EC7C6A] group-hover:text-white transition-colors"
-              href="#"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                />
-              </svg>
-
-              <span className="absolute top-2 right-4 text-md bg-[#EC7C6A] text-white  rounded-full h-6 w-6 text-center font-semibold group-hover:bg-white group-hover:text-[#EC7C6A]">
-                {Array.isArray(state.cart) ? state.cart.length : 0}
-              </span>
-            </a>
-          </li>
-
           <li className="flex justify-center hover:bg-[#252837] text-[#EC7B6A] rounded-l-xl p-3 group transition-colors">
-            <a
-              className=" p-3 block rounded-xl group-hover:bg-[#EC7C6A] group-hover:text-white transition-colors"
-              href="#"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-                />
-              </svg>
-            </a>
-          </li>
-
-          <li className="flex justify-center hover:bg-[#252837] text-[#EC7B6A] rounded-l-xl p-3 group transition-colors">
-            <a
+            <Link
               className="p-3 block rounded-xl group-hover:bg-[#EC7C6A] group-hover:text-white transition-colors"
-              href="#"
+              to="/"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -108,13 +72,13 @@ function SideBar() {
                   d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
                 />
               </svg>
-            </a>
+            </Link>
           </li>
 
           <li className="flex justify-center hover:bg-[#252837] text-[#EC7B6A] rounded-l-xl p-3 group transition-colors">
-            <a
+            <Link
+              to="#"
               className="p-3 block rounded-xl group-hover:bg-[#EC7C6A] group-hover:text-white transition-colors"
-              href="#"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -135,14 +99,11 @@ function SideBar() {
                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-            </a>
+            </Link>
           </li>
-        </ul>
-      </div>
-      <div>
-        <ul className="pl-4">
           <li className="flex justify-center hover:bg-[#252837] text-[#EC7B6A]  my-1 rounded-l-xl p-3 group transition-colors">
             <a
+              onClick={handleLoginOut}
               className="p-3 block rounded-xl group-hover:bg-[#EC7C6A] group-hover:text-white transition-colors"
               href=""
             >
@@ -164,6 +125,7 @@ function SideBar() {
           </li>
         </ul>
       </div>
+      <div></div>
     </nav>
   )
 }

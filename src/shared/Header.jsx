@@ -1,4 +1,19 @@
+import { useContext, useState } from "react";
+import { Context } from "../services/Context";
+
 function Header() {
+
+  const [, dispatch] = useContext(Context)
+
+  const [serchTerm, setSerchTerm] = useState("")
+
+  const handleSearchBar = (e) => {
+    setSerchTerm(e.target.value)
+    dispatch({
+      type: "FILTER_SERCH_TERM",
+      payload: e.target.value
+    })
+  }
 
   return (
     <header className=" flex flex-col gap-6 mb-8">
@@ -28,7 +43,9 @@ function Header() {
             <input
               className="pl-12 py-2 rounded-lg w-full outline-none text-white bg-[#1E1D2B]"
               type="text"
-              placeholder="Search"
+              placeholder="Search title or branch"
+              onChange={handleSearchBar}
+              value={serchTerm}
             />
           </div>
         </form>

@@ -1,20 +1,59 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { showContext } from "../services/showProvider"
 import { Context } from "../services/Context"
 import ItemInTheCart from "./ItemInTheCart"
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react"
+import axios from "axios"
 
 function Orders() {
+  const [preferenceID, setPreferenceID] = useState(null)
   const [state] = useContext(Context)
+  console.log(state.cart)
 
-  const subTotal = state.cart ? state.cart.reduce((total, product) => {
-    return total + product.price * product.quantity
-  }, 0) : 0
+  const ProductArray = state.cart?.map(product => ({
+    title: product.title,
+    unit_price: product.price,
+    quantity: product.quantity,
+  }))
+
+
+  console.log(ProductArray)
+
+  initMercadoPago("APP_USR-b46bb821-d5a0-4e44-9541-201e1ae14566", {
+    locale: "es-AR",
+  })
+  const createPreference = async () => {
+    try {
+      const result = await axios.post(
+        "http://localhost:3001/create-preference",
+        { products: ProductArray }
+      )
+      console.log(result.data)
+      const { id } = result.data
+      return id
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleBuy = async () => {
+    const id = await createPreference()
+    if (id) {
+      setPreferenceID(id)
+    }
+  }
+
+  const subTotal = state.cart
+    ? state.cart.reduce((total, product) => {
+        return total + product.price * product.quantity
+      }, 0)
+    : 0
 
   const { handleShowOrder, showOrder } = useContext(showContext)
 
   return (
     <section
-      className={`lg:w-3/12 lg:static fixed top-0 w-full h-full bg-[#1E1D2B] z-30 transition-all
+      className={`lg:w-4/12 lg:static fixed top-0 w-full h-full bg-[#1E1D2B] z-30 transition-all
     ${showOrder ? "right-0" : "-right-full"}`}
     >
       <div className="flex flex-col gap-3 px-3 h-full relative lg:mt-0 ">
@@ -40,18 +79,9 @@ function Orders() {
           </button>
         </div>
 
-        <h1 className="text-3xl text-white mt-16 lg:mt-6">Orders #934</h1>
-        <div className="flex gap-6">
-          <button className="p-2 px-3 bg-[#EC7C6A] text-white rounded-xl">
-            Dine In
-          </button>
-          <button className="p-2 px-3 text-[#EC7C6A] bg-[#252837] border border-white rounded-xl">
-            To go
-          </button>
-          <button className="p-2 px-3 text-[#EC7C6A] bg-[#252837] border border-white rounded-xl">
-            Delivery
-          </button>
-        </div>
+        <h1 className="text-3xl text-center text-white mt-16 mb-4 lg:mt-6">
+          Order #531
+        </h1>
 
         <div className="grid grid-cols-6 text-white px-4 gap-2 ">
           <p className="col-span-4">Item</p>
@@ -79,9 +109,15 @@ function Orders() {
             <span className="text-lg">$ {subTotal}</span>
           </div>
           <div>
-            <button className="bg-[#EC7C6A] w-full py-2 rounded-xl">
+            <button
+              onClick={handleBuy}
+              className="bg-[#EC7C6A] w-full py-2 rounded-xl"
+            >
               Continue to payment
             </button>
+            {preferenceID && (
+              <Wallet initialization={{ preferenceId: preferenceID }} />
+            )}
           </div>
         </div>
       </div>

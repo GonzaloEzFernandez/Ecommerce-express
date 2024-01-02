@@ -19,8 +19,6 @@ function Memori({ children }) {
 
   const [state, dispatch] = useReducer(Reducer, initialState)
 
-  console.log(initialState, state);
-
   return (
     <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
   )

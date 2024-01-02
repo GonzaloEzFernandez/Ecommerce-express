@@ -1,21 +1,44 @@
-import { useContext } from "react";
-import { Context } from "../services/Context";
+import { useContext, useState } from "react"
+import { Context } from "../services/Context"
 
-function ItemInTheCart({id, price, thumbnail, title, quantity}) {
+function ItemInTheCart({ id, price, thumbnail, title, quantity }) {
+  const [, dispatch] = useContext(Context)
+  const [desploy, setDesploy] = useState(false)
 
-  const [, dispatch] = useContext(Context);
+  const handleClick = () => {
+    setDesploy(!desploy)
+  }
 
   const handleDelete = id => {
     dispatch({
       type: "DELETE",
-      payload: id
+      payload: id,
     })
   }
 
+  const handleIncrement = () => {
+    console.log(id);
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: {
+        id
+      }
+    })
+  }
+
+  const handleDecrement = () => {
+    console.log(id);
+    dispatch({
+      type: "DECREMENT",
+      payload: {
+        id
+      }
+    })
+  }
 
   return (
-        <div className="text-white  bg-[#252837] p-4 rounded-xl mb-2">
-      <div className="grid grid-cols-6 gap-2 mb-3">
+    <div className="text-white  bg-[#252837] p-4 rounded-xl mb-2">
+      <div className="grid grid-cols-6 mb-3">
         <div className="flex items-center col-span-4 gap-4">
           <img
             className="rounded-full w-16 h-16 object-cover"
@@ -24,29 +47,94 @@ function ItemInTheCart({id, price, thumbnail, title, quantity}) {
           />
           <div>
             <p>{title}</p>
-            <p className="text-gray-300 font-bold" >Price: <span className="font-normal"> ${price} </span></p>
+            <p className="text-gray-300 font-bold">
+              Price: <span className="font-normal"> ${price} </span>
+            </p>
           </div>
         </div>
-        <div className="flex ">
-          <span className="pl-2">{quantity}</span>
+        <div className="flex flex-col relative">
+          <div 
+          onClick={handleClick}
+          className="flex items-center">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  desploy && "rotate-180"
+                }`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                />
+              </svg>
+            </button>
+            <span className="w-6 bg-transparent text-lg text-center outline-none">
+              {quantity}
+            </span>
+          </div>
+          {desploy && (
+            <div className="flex flex-col  absolute top-5 left-0  bg-[#1E1D2B] mt-2 ">
+              <button 
+              onClick={handleIncrement}
+              className="px-3 hover:bg-white hover:text-[#252837]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 "
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6v12m6-6H6"
+                  />
+                </svg>
+              </button>
+              <button 
+              onClick={handleDecrement}
+              className="px-3 hover:bg-white hover:text-[#252837]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 hover:text-[#252837] "
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M18 12H6"
+                  />
+                </svg>
+              </button>
+            </div>
+          )}
         </div>
-        <div>
-          <span>{price}</span>
+        <div className="px-4">
+          <span>${price}</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-6  items-center">
-        <form className="col-span-5">
-          <input
-            className="  rounded-lg px-2 outline-none py-2 bg-[#1E1D2B]"
-            type="text"
-            placeholder="Order note..."
-          />
-        </form>
+      <div className="grid grid-cols-6 mt-6  items-center">
+        <input
+          className=" col-span-5 rounded-lg px-2 outline-none py-2 bg-[#1E1D2B]"
+          type="text"
+          placeholder="Order note..."
+        />
         <div className="pl-2">
-          <button 
-          onClick={() => handleDelete(id)}
-          className="border border-red-600 p-2 rounded-lg hover:bg-red-600">
+          <button
+            onClick={() => handleDelete(id)}
+            className="border ml-2 border-red-600 p-2 rounded-lg hover:bg-red-600"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -65,7 +153,6 @@ function ItemInTheCart({id, price, thumbnail, title, quantity}) {
         </div>
       </div>
     </div>
-    
   )
 }
 
