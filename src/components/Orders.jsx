@@ -8,16 +8,12 @@ import axios from "axios"
 function Orders() {
   const [preferenceID, setPreferenceID] = useState(null)
   const [state] = useContext(Context)
-  console.log(state.cart)
 
   const ProductArray = state.cart?.map(product => ({
     title: product.title,
     unit_price: product.price,
     quantity: product.quantity,
   }))
-
-
-  console.log(ProductArray)
 
   initMercadoPago("APP_USR-b46bb821-d5a0-4e44-9541-201e1ae14566", {
     locale: "es-AR",
@@ -28,7 +24,6 @@ function Orders() {
         "http://localhost:3001/create-preference",
         { products: ProductArray }
       )
-      console.log(result.data)
       const { id } = result.data
       return id
     } catch (error) {

@@ -22,8 +22,6 @@ function Reducer(state, action) {
     }
 
     case "FILTER_SERCH_TERM": {
-      const serchTer = action.payload
-      console.log(serchTer)
       return {
         ...state,
         filter: {
@@ -34,8 +32,6 @@ function Reducer(state, action) {
     }
 
     case "FILTER_CATEGORY": {
-      const category = action.payload
-      console.log(category)
       return {
         ...state,
         filter: {
