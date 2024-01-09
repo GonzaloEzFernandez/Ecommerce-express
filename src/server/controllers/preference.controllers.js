@@ -2,8 +2,7 @@
 import { MercadoPagoConfig, Preference } from "mercadopago"
 // Agrega credenciales
 const client = new MercadoPagoConfig({
-  accessToken:
-    "APP_USR-3591978924784632-122911-2ac09b35817998fc8cc2940c32cc9627-1615296072",
+  accessToken: process.env.ACCESS_TOKEN,
 })
 
 const preference = new Preference(client)
