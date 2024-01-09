@@ -15,7 +15,7 @@ function Orders() {
     quantity: product.quantity,
   }))
 
-  initMercadoPago("APP_USR-b46bb821-d5a0-4e44-9541-201e1ae14566", {
+  initMercadoPago(process.env.INIT_MERCADO_PAGO, {
     locale: "es-AR",
   })
   const createPreference = async () => {

@@ -33,11 +33,14 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={user ? <Layout /> : <Login />}>
+        <Route
+          path="/Ecommerce-express/"
+          element={user ? <Layout /> : <Login />}
+        >
           <Route index element={<MainPage />} />
         </Route>
       </Routes>
-      <Toaster richColors position="bottom-left" expand={false} />
+      <Toaster richColors position="top-left" expand={false} />
     </div>
   )
 }

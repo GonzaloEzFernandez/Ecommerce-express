@@ -8,13 +8,13 @@ import { BrowserRouter } from "react-router-dom"
 import ShowProvider from "./services/showProvider.jsx"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Memory>
-    <ShowProvider>
-      <BrowserRouter>
+  <BrowserRouter>
+    <Memory>
+      <ShowProvider>
         <React.StrictMode>
           <App />
         </React.StrictMode>
-      </BrowserRouter>
-    </ShowProvider>
-  </Memory>
+      </ShowProvider>
+    </Memory>
+  </BrowserRouter>
 )
